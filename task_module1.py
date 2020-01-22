@@ -3,43 +3,50 @@ import os
 import re
 import string
 import sqlite3
-from typing import List
-from pathlib import Path
+from lxml import etree as ET
+import xml.etree.ElementTree as ET
 import logging
-
-mypath = Path().absolute()  # here
-os.chdir(mypath/'input')  # here
-source = os.listdir(mypath/'input')  # here
-destination = mypath/'incorrect_input'  # here
+from pathlib import Path
+mypath = Path().absolute()
+os.chdir(mypath/'input')
+source = os.listdir(mypath/'input')
+destination = mypath/'incorrect_input'
 for files in source:
     if not files.endswith(".fb2"):
         shutil.move(files, destination)
+    else:
+        tree = ET.parse(os.path.join(mypath/'input', files))
+        root = tree.getroot()
+#book_name
+book_name = []
+number_of_paragraph = []
+for event, elem1 in ET.iterparse(files):
+    elem1.tag = elem1.tag.partition('}')[-1]
+    if elem1.tag == "book-name":
+        book_name.append(elem1.text)
+print(book_name)
 
 #count paragraphs
-from lxml import etree as ET
-tree = ET.parse("Example.fb2")
-root = tree.getroot()
-import xml.etree.ElementTree as ET
 number_of_paragraph = []
-paragraphs = tree.findall('//{http://www.gribuser.ru/xml/fictionbook/2.0}p')
-number_of_paragraph.append(len(paragraphs))
-print(number_of_paragraph)
+num_p = []
+for event, elem2 in ET.iterparse(files):
+  if elem2.tag.partition('}')[-1] == "p":
+      paragraphs = tree.findall('*/p')
+      num_p.append(len(paragraphs))
+      number_of_paragraph.append(len(num_p))
+print(len(number_of_paragraph))
 
 
 #book name
-with open('Example.fb2', 'r', encoding='utf8') as file:
-    raw_file = file.read()
-book_name_pattern = r'<book-name>(.*?)<\/book-name>'
-title = re.findall(book_name_pattern, raw_file)
-print(title)
+with open("Example.fb2", 'r', encoding='utf8') as file:
+   text = file.read()
 book_text_pattern = r"<body>(.*?)<\/body>"
-text_of_book = re.findall(book_text_pattern, raw_file, flags=re.DOTALL)
-#print(text_of_book)
+text_of_book = re.findall(book_text_pattern, text, flags=re.DOTALL)
 clean_pattern = re.compile('[^а-яА-ЯёЁ]')
 book_text = re.sub(clean_pattern, ' ', str(text_of_book))
 extra_symbols = string.punctuation.join('«»…—№\\n’' + string.digits)
 clean_text = ''.join(word for word in book_text if word not in extra_symbols)
-#print(clean_text)
+
 #number of words
 number_of_words = []
 words = re.findall(r'\w+', clean_text)
@@ -100,7 +107,7 @@ def sql_table(con):
      cursorObj.execute("CREATE TABLE book_stat(book_name text, number_of_paragraph number, number_of_words number,"
                        "number_of_letters number, words_with_capital_letters number, words_in_lowercase number)")
      cursorObj.execute("CREATE TABLE input_file_stat(word text, count INT, count_uppercase INT)")
-     cursorObj.execute("INSERT INTO book_stat VALUES (?, ?, ?, ?, ?, ?)", (title[0], number_of_paragraph[0], number_of_words [0], number_of_letters [0], word_Upper, word_lower))
+     cursorObj.execute("INSERT INTO book_stat VALUES (?, ?, ?, ?, ?, ?)", (book_name[0], number_of_paragraph[0], number_of_words [0], number_of_letters [0], word_Upper, word_lower))
      cursorObj.executemany("INSERT INTO input_file_stat VALUES (?, ?, ?)", dictlist)
      con.commit()
 con = sql_connection()
