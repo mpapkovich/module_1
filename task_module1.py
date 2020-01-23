@@ -3,9 +3,9 @@ import os
 import re
 import string
 import sqlite3
+import logging
 from lxml import etree as ET
 import xml.etree.ElementTree as ET
-import logging
 from pathlib import Path
 mypath = Path().absolute()
 os.chdir(mypath/'input')
@@ -14,32 +14,38 @@ destination = mypath/'incorrect_input'
 for files in source:
     if not files.endswith(".fb2"):
         shutil.move(files, destination)
-    else:
+    elif files.endswith(".fb2"):
         tree = ET.parse(os.path.join(mypath/'input', files))
         root = tree.getroot()
-#book_name
+
 book_name = []
 number_of_paragraph = []
-for event, elem1 in ET.iterparse(files):
-    elem1.tag = elem1.tag.partition('}')[-1]
-    if elem1.tag == "book-name":
-        book_name.append(elem1.text)
+for files in source:
+    if files.endswith(".fb2"):
+        for event, elem1 in ET.iterparse(files):
+            elem1.tag = elem1.tag.partition('}')[-1]
+            if elem1.tag == "book-name":
+                book_name.append( elem1.text)
 print(book_name)
-
-#count paragraphs
 number_of_paragraph = []
 num_p = []
-for event, elem2 in ET.iterparse(files):
-  if elem2.tag.partition('}')[-1] == "p":
-      paragraphs = tree.findall('*/p')
-      num_p.append(len(paragraphs))
-      number_of_paragraph.append(len(num_p))
-print(len(number_of_paragraph))
+a = []
+for files in source:
+    if files.endswith(".fb2"):
+        for event, elem2 in ET.iterparse(files):
+            if elem2.tag.partition('}')[-1] == "p":
+                paragraphs = tree.findall('*/p')
+                num_p.append(len(paragraphs))
+                a.append(len(num_p))
+number_of_paragraph.append(len(a))
+print(number_of_paragraph)
 
 
 #book name
-with open("Example.fb2", 'r', encoding='utf8') as file:
-   text = file.read()
+for files in source:
+    if files.endswith(".fb2"):
+        with open(files, 'r', encoding='utf8') as file:
+            text = file.read()
 book_text_pattern = r"<body>(.*?)<\/body>"
 text_of_book = re.findall(book_text_pattern, text, flags=re.DOTALL)
 clean_pattern = re.compile('[^а-яА-ЯёЁ]')
