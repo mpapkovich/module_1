@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "Check table book_stat",
+      "query": "SELECT count(*) FROM book_stat",
+      "expected": 1
+    },
+    {
+    "name": "Check table input_file_stat",
+    "query": "SELECT count(*) FROM input_file_stat",
+    "expected": 13186
+    }
+  ]
+}
