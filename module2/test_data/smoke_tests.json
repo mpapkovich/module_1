@@ -9,6 +9,21 @@
     "name": "Check table input_file_stat",
     "query": "SELECT count(*) FROM input_file_stat",
     "expected": 13186
+    },
+	{
+      "name": "Check null book_stat",
+      "query": "SELECT count(*) FROM book_stat where number_of_paragraph is NULL or number_of_letters is NULL or words_with_capital_letters is NULL or words_in_lowercase is NULL   ",
+      "expected": 0
+    },
+	{
+      "name": "Check null input_file_stat",
+      "query": "SELECT count(*) FROM input_file_stat where word is null",
+      "expected": 0
+    },
+	{
+      "name": "Check distinct word",
+      "query": "SELECT count(distinct word) FROM input_file_stat",
+      "expected": 0
     }
   ]
 }
