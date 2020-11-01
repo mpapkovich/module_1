@@ -1,8 +1,10 @@
 {
   "dev": {
-    "database": "/MP_DQE/Python/module_1/module_2/mpdatabase.db",
-    "test_data_folder": "/MP_DQE/Python/module_1/module_2/test_data"
+    "database": "C:/Users/Maryana_Papkovich/MP_DQE/Python/module_1/module_2/mpdatabase.db",
+    "test_data_folder": "C:/Users/Maryana_Papkovich/MP_DQE/Python/module_1/module_2/test_data"
   },
   "uat": {
+    "database": "C:/Users/Maryana_Papkovich/MP_DQE/Python/module_1/module_2/mpdatabase_uat.db",
+    "test_data_folder": "C:/Users/Maryana_Papkovich/MP_DQE/Python/module_1/module_2/uat_data"
   }
 }

@@ -1,0 +1,20 @@
+
+
+Testing of C:/Users/Maryana_Papkovich/MP_DQE/Python/module_1/module_2/uat_data\smoke_tests_uat.json was started
+
+
+Test case 'Check table book_stat'
+PASS. Result is '1' as expected'
+	Query: SELECT count(*) FROM book_stat
+
+Test case 'Check table input_file_stat'
+PASS. Result is '13186' as expected'
+	Query: SELECT count(*) FROM input_file_stat
+
+Test case 'Check null book_stat'
+PASS. Result is '0' as expected'
+	Query: SELECT count(*) FROM book_stat where number_of_paragraph is NULL or number_of_letters is NULL or words_with_capital_letters is NULL or words_in_lowercase is NULL   
+
+Test case 'Check null input_file_stat'
+PASS. Result is '0' as expected'
+	Query: SELECT count(*) FROM input_file_stat where word is null
