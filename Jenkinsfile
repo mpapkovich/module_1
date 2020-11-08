@@ -19,3 +19,10 @@ pipeline {
         }
     }
 }
+post {
+    failure {
+        mail to: 'maryana_papkovich@epam.com',
+             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+             body: "Something is wrong with ${env.BUILD_URL}"
+    }
+}
