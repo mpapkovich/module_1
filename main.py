@@ -6,11 +6,11 @@ import os
 
 
 mypath = Path().absolute()
-os.chdir(mypath/'input_folder')
-INPUT_FOLDER = os.listdir(mypath/'input_folder')
-PROCESSED_FOLDER = os.listdir(mypath/'processed_folder')
-INCORRECT_FOLDER = os.listdir(mypath/'incorrect_input')
-DB_FOLDER = os.listdir(mypath/'db_folder')
+
+INPUT_FOLDER = mypath + '/input_folder'
+PROCESSED_FOLDER = mypath + '/processed_folder'
+INCORRECT_FOLDER = mypath + '/incorrect_input'
+DB_FOLDER = mypath + '/db_folder'
 DB_NAME = 'mpdatabase.db'
 
 def main():
