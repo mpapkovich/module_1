@@ -25,8 +25,8 @@ def main():
     word_lower = parser.get_words_in_lower()
     words = parser.get_words_stats()
     db = sql.SqlDatabase(DB_FOLDER, DB_NAME)
-    db.drop('book_stat')
-    db.drop('input_file_stat')
+    db.drop("book_stat")
+    db.drop("input_file_stat")
     db.create_book_stat_table()
     db.create_input_file_stat_table()
     db.insert_book_stat_values(bookname[0],number_of_paragraph[0], number_of_words[0], number_of_letters[0], word_Upper,
