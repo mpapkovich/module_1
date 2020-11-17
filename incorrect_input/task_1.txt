@@ -1,0 +1,8 @@
+# находим файл .fb2
+import os
+
+os.chdir('D:/MP_DQE/Python/module_1')
+test = open('Example.fb2', 'r', encoding='utf8')
+raw_text = test.read()
+
+print(raw_text)
