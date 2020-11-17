@@ -23,7 +23,8 @@ class SqlDatabase:
     def create_book_stat_table(self):
         connection = sqlite3.connect(self.db_folder + '/' + self.name)
         cursorObj = connection.cursor()
-        cursorObj.execute("CREATE TABLE book_stat(book_name text, number_of_paragraph number, number_of_words number,"
+        if not cursorObj.execute("Select * FROM book_stat WHERE 1=2"):
+            cursorObj.execute("CREATE TABLE book_stat(book_name text, number_of_paragraph number, number_of_words number,"
                        "number_of_letters number, words_with_capital_letters number, words_in_lowercase number)")
 
     def create_input_file_stat_table(self):
