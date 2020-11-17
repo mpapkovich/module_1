@@ -4,6 +4,7 @@ pipeline {
    
     stage('Build') {
       steps {
+        sh 'pip install lxml'
         sh 'python main.py'
       }
     }
