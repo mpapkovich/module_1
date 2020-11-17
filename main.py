@@ -5,7 +5,7 @@ from pathlib import Path
 import os
 
 
-mypath = Path().absolute()
+mypath = os.path.abspath(os.getcwd())
 
 INPUT_FOLDER = mypath + '/input_folder'
 PROCESSED_FOLDER = mypath + '/processed_folder'
