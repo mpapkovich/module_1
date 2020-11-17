@@ -1,12 +1,16 @@
 import FileHandler as fh
 import Parser as p
 import SqlDatabase as sql
+from pathlib import Path
+import os
 
 
-INPUT_FOLDER = 'C:/Users/Maryana_Papkovich/Desktop/TEST/input_folder'
-PROCESSED_FOLDER = 'C:/Users/Maryana_Papkovich/Desktop/TEST/processed_folder'
-INCORRECT_FOLDER = 'C:/Users/Maryana_Papkovich/Desktop/TEST/incorrect_input'
-DB_FOLDER = 'C:/Users/Maryana_Papkovich/Desktop/TEST/db_folder'
+mypath = Path().absolute()
+os.chdir(mypath/'input_folder')
+INPUT_FOLDER = os.listdir(mypath/'input_folder')
+PROCESSED_FOLDER = os.listdir(mypath/'processed_folder')
+INCORRECT_FOLDER = os.listdir(mypath/'incorrect_input')
+DB_FOLDER = os.listdir(mypath/'db_folder')
 DB_NAME = 'mpdatabase.db'
 
 def main():
