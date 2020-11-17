@@ -45,3 +45,10 @@ class SqlDatabase:
         cursorObj = connection.cursor()
         cursorObj.execute("INSERT INTO input_file_stat VALUES (?, ?, ?)", (word, total, capital))
         connection.commit()
+
+    def drop(self, table):
+        connection = sqlite3.connect(self.connection_name)
+        cursor = connection.cursor()
+        cursor.execute('drop table {​​}​​'.format(table))
+        cursor.close()
+    connection.close()
