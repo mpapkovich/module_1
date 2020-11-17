@@ -49,6 +49,6 @@ class SqlDatabase:
     def drop(self, table):
         connection = sqlite3.connect(self.db_folder + '/' + self.name)
         cursor = connection.cursor()
-        cursor.execute('drop table {​​}​​'.format(table))
+        cursor.execute('drop table {}'.format(table))
         cursor.close()
         connection.close()
